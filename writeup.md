@@ -4,6 +4,7 @@
 This is the write up for the Kinematics project. 
 The jupyter notebook consists of the working and calculations
 https://github.com/frozenamazon/Udacity-RoboND-Kinematics/blob/master/code/Kinematics_Project_Test_Notebook.ipynb
+
 Video for the working arm
 https://youtu.be/B2PavVfN0Tg
 
@@ -116,10 +117,75 @@ TG_0 =  Matrix([
 Ik is obtained by splitting into two parts, this is to reduce the complexity of the calculations. One part is a RRR revolute arm, another a spherical arm. Solving the RRR revolute arm would return the joint angles for joint 1,2 and 3. While the spherical arm would give joint angles for joint 4,5 and 6
 
 #### RRR joint
+
+![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/ik_q2q3.png "q2q3")
 We would ignore joint 4,5,6. Effectively imagine an arm with just joint 1,2,3
+
 ##### Angle for joint 1
 This is the easiest angle to determine as it just atan2(y, x)
 
 ##### Angle for joint 2 and 3
 We discard joint 1 for now. To calculate the angles for these two joints, it is about applying the cosine rule to obtain the angle first for angle 3, then calculating angle 2. The figure below explains how theta is obtained
+
+![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/ik_q2q3_triangle.png "q2q3")
+
+Forming this equation
+```
+β = 180 - 𝚹3
+xy = sqrt(Wc_x^2 + Wc_y^2) - a0
+z = Wc_z - d1
+```
+Using the cosine rule
+```
+D^2 = xy^2 + z^2 = l2^2 + l3 ^2 - 2(l2)(l3)cos(β)
+cos(𝚹3) = (xy^2 + z^2 - l3*l3 - l2*l2)/(2*l3*l2) = r
+𝚹3 = atan2(sqrt(1-r*r), r), where sqrt(1-r*r) = sin(𝚹3)
+𝚹3 = atan2(-sqrt(1-r*r), r)
+𝚹2 = γ - ⍺ = atan2(xy, z) - atan2(l3*sin(𝚹3), l2+l3*cos(𝚹3))
+𝚹3 = 𝚹3 - pi/2
+```
+𝚹3 has to be be minus with 90 degrees, as the start point is not vertical up, but horizontal right
+
+𝚹3 is checked to ensure it is between -pi and pi/2, as it starts horizontally
+𝚹2 is checked to be -pi to pi
+
+##### Angle for joint 4,5,6
+The overall roll, pitch, yaw for the end effector relative to the base link is as follows:
+![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/rot_spherical.png "rotation")
+
+Using the individual DH transforms we can obtain the resultant transform and hence resultant rotation by:
+```
+    R0_6 = R0_1*R1_2*R2_3*R3_4*R4_5*R5_6
+ ```  
+Since the overall RPY (Roll Pitch Yaw) rotation between base_link and gripper_link must be equal to the product of individual rotations between respective links, following holds true:
+
+    R0_6 * Rcorr = Rrpy
+    where Rrpy = Homogeneous RPY rotation between base_link and gripper_link
+    ajd Rcorr is the difference in axis between the DH convention frame to the URDF frame
+
+As we calculated joints 1-3, we can substitute those values in their respective individual rotation matrices and pre-multiply both sides of eq1 by inv(R0_3) which leads to:
+```
+    R0_3 * R3_6 * Rcorr = Rrpy
+    R3_6 = inv(R0_3) * Rrpy * Rcorr.T
+    Rcorr = rot_z()*rot_y()
+ ```   
+Note for Rrpy we are using intrinsic rotation as that is what is provided
+
+```
+    Rrpy = Matrix([[cos(alpha)*cos(beta), cos(alpha)*sin(beta)*sin(gamma) - sin(alpha)*cos(gamma), cos(alpha)*sin(beta)*cos(gamma) + sin(alpha)*sin(gamma)], 
+               [sin(alpha)*cos(beta), sin(alpha)*sin(beta)*sin(gamma) + cos(alpha)*cos(gamma), sin(alpha)*sin(beta)*cos(gamma) - cos(alpha)*sin(gamma)],
+               [          -sin(beta),                                    cos(beta)*sin(gamma), cos(beta)*cos(gamma)]]);
+
+𝚹4 = atan(sin(q4)*sin(q5), -sin(q5)*cos(q4))
+where both sin(q5) cancels out
+
+𝚹6 = atan(-sin(q5)*sin(q6), sin(q5)*cos(q6))
+where both sin(q5) cancels out
+
+𝚹5 = atan(sqrt(sin2(q5)*cos2(q6) + sin2(q5)*sin2(q6)), cos(q5)) = atan(sin(q5), cos(q5))
+where sin2 + cos2 = 1
+
+```
+
+
 
