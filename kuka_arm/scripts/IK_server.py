@@ -113,15 +113,20 @@ def getRRRSpehericalArmJointAngles(yaw, pitch, roll, theta1, theta2, theta3):
 
 
     E3_6 = R0_3.transpose() * Rrpy * Rcorr.transpose()
-    #R3_6 = (T3_4*T4_5*T5_6)[:3,:3] = E3_6
-    # R3_6 = Matrix([
+    # LHS of the equation (R3_6 is equal to the RHS)
+    #   R3_6 = (T3_4*T4_5*T5_6)[:3,:3] = E3_6
+    #   R3_6 = Matrix([
     #     [-sin(q4)*sin(q6) + cos(q4)*cos(q5)*cos(q6), -sin(q4)*cos(q6) - sin(q6)*cos(q4)*cos(q5), -sin(q5)*cos(q4)],
     #     [                           sin(q5)*cos(q6),                           -sin(q5)*sin(q6),          cos(q5)],
     #     [-sin(q4)*cos(q5)*cos(q6) - sin(q6)*cos(q4),  sin(q4)*sin(q6)*cos(q5) - cos(q4)*cos(q6),  sin(q4)*sin(q5)]])
 
-
+    # theta4 is atan2( sin(q4)*sin(q5)/ sin(q5)*cos(q4)) = atan2(sin(q4)/cos(q4))
     theta4 = atan2(E3_6[2,2], -E3_6[0,2]).evalf()
+    # theta6 is atan2( sin(q5)*sin(q6)/ sin(q5)*cos(q6)) = atan2(sin(q6)/cos(q6))
     theta6 = atan2(-E3_6[1,1], E3_6[1,0]).evalf()
+
+    #theta5 is atan2 ( sqrt(sin2(q5)*cos2(q6) + sin(q5)*sin(q6))/cos(q5))
+    # where sin2 + cos2 = 1
     theta5 = atan2(sqrt(E3_6[1,0]**2 + E3_6[1,1]**2), E3_6[1,2]).evalf()
     theta5b = atan2(-sqrt(E3_6[1,0]**2 + E3_6[1,1]**2), E3_6[1,2]).evalf()
 
@@ -196,8 +201,8 @@ def handle_calculate_IK(req):
             # T0_6 = T0_5*T5_6 #link_5 to link_6
             
             # Extract end-effector position and orientation from request
-        # px,py,pz = end-effector position
-        # roll, pitch, yaw = end-effector orientation
+            # px,py,pz = end-effector position
+            # roll, pitch, yaw = end-effector orientation
             px = req.poses[x].position.x
             py = req.poses[x].position.y
             pz = req.poses[x].position.z
@@ -208,9 +213,6 @@ def handle_calculate_IK(req):
                 [req.poses[x].orientation.x, req.poses[x].orientation.y,
                     req.poses[x].orientation.z, req.poses[x].orientation.w])
      
-            # Calculate joint angles using Geometric IK method
-
-            # Calculate roll angles using Geometric IK method
             T = tf.transformations.quaternion_matrix(
                 [req.poses[x].orientation.x, 
                 req.poses[x].orientation.y,
@@ -221,7 +223,8 @@ def handle_calculate_IK(req):
             R = T[:3,:3]
 
             dG = 0.303 #dG = d6+l
-            # calulating the wrist center
+            # calulating the wrist center, only the first column is taken as the joints are along the axis
+            # Looking for only lx, ly, lz instead of nx, ny, nz
             Wc = P - dG * R[:3, [0]]
             wx = Wc[0,0]
             wy = Wc[1,0]
