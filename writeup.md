@@ -11,7 +11,10 @@ https://youtu.be/B2PavVfN0Tg
 #### DH Parameters for Kuka arm
 
 The parameters is obtained using the following convention
+
+
 ![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/DH.png "DH annotation")
+
 
 
 | i        | a(i-1)  | a(i-1)  | d(i-1)  | θ(i-1)  |
@@ -34,6 +37,7 @@ The parameters is obtained using the following convention
 | 5        | 90      | 0       | 0       |θ5       |
 | 6        | -90     | 0       | 0       |θ6       |
 | G        | 0       | 0       | 0.303   |0        |
+
 
 ### Forward Kinematics
 
