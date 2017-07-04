@@ -17,7 +17,7 @@ The parameters is obtained using the following convention
 
 
 
-| i        | a(i-1)  | a(i-1)  | d(i-1)  | θ(i-1)  |
+| i        | a(i-1)  | a(i-1)  | d(i)    | θ(i)    |
 | :------- |:-------:|:-------:|:-------:|:-------:|
 | 1        | 0       | 0       | d1      |θ1       |
 | 2        | -90     | a1      | 0       |θ2 - 90  |
@@ -28,7 +28,7 @@ The parameters is obtained using the following convention
 | G        | 0       | 0       | dG      |0        |
 
 
-| i        | a(i-1)  | a(i-1)  | d(i-1)  | θ(i-1)  |
+| i        | a(i-1)  | a(i-1)  | d(i)    | θ(i)    |
 | :------- |:-------:|:-------:|:-------:|:-------:|
 | 1        | 0       | 0       | 0.75    |θ1       |
 | 2        | -90     | 0.35    | 0       |θ2 - 90  |
@@ -135,6 +135,8 @@ We discard joint 1 for now. To calculate the angles for these two joints, it is 
 
 Forming this equation
 ```
+l2 = a2
+l3 = sqrt(a3^2 + d4^2)
 β = 180 - 𝚹3
 xy = sqrt(Wc_x^2 + Wc_y^2) - a0
 z = Wc_z - d1
