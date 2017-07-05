@@ -3,7 +3,7 @@
 ---
 This is the write up for the Kinematics project. 
 The jupyter notebook consists of the working and calculations
-https://github.com/frozenamazon/Udacity-RoboND-Kinematics/blob/master/code/Kinematics_Project_Test_Notebook.ipynb
+https://github.com/lisaljl/Udacity-RoboND-Kinematics/blob/master/code/Kinematics_Project_Test_Notebook.ipynb
 
 Video for the working arm
 https://youtu.be/B2PavVfN0Tg
@@ -13,7 +13,7 @@ https://youtu.be/B2PavVfN0Tg
 The parameters is obtained using the following convention
 
 
-![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/DH.png "DH annotation")
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/code/DH.png "DH annotation")
 
 
 
@@ -122,7 +122,7 @@ Ik is obtained by splitting into two parts, this is to reduce the complexity of 
 
 #### RRR joint
 
-![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/ik_q2q3.png "q2q3")
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/code/ik_q2q3.png "q2q3")
 We would ignore joint 4,5,6. Effectively imagine an arm with just joint 1,2,3
 
 ##### Angle for joint 1
@@ -131,7 +131,7 @@ This is the easiest angle to determine as it just atan2(y, x)
 ##### Angle for joint 2 and 3
 We discard joint 1 for now. To calculate the angles for these two joints, it is about applying the cosine rule to obtain the angle first for angle 3, then calculating angle 2. The figure below explains how theta is obtained
 
-![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/ik_q2q3_triangle.png "q2q3")
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/code/ik_q2q3_triangle.png "q2q3")
 
 Forming this equation
 ```
@@ -157,7 +157,7 @@ cos(𝚹3) = (xy^2 + z^2 - l3*l3 - l2*l2)/(2*l3*l2) = r
 
 ##### Angle for joint 4,5,6
 The overall roll, pitch, yaw for the end effector relative to the base link is as follows:
-![alt text](https://raw.githubusercontent.com/frozenamazon/Udacity-RoboND-Kinematics/master/code/rot_spherical.png "rotation")
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/code/rot_spherical.png "rotation")
 
 Using the individual DH transforms we can obtain the resultant transform and hence resultant rotation by:
 ```
