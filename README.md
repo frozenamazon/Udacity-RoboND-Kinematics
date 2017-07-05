@@ -1,5 +1,19 @@
 # Robotic arm - Pick & Place project
 
+This is a project about a robotic simulation to pick and place an project.
+
+#### Objective
+Pick an egg/cylinder from the shelf. The egg has 9 possibilities on where it can be placed. The location of the egg is given to the RViz and it is fed to the arm. The arm would then be calculate the path required to pick up the egg, then placed it back into bin on the left. Refer to image:
+
+#### World
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/world.png "DH annotation")
+
+#### Video
+https://youtu.be/B2PavVfN0Tg
+
+
+### Requirement:
+
 Make sure you are using robo-nd VM or have Ubuntu+ROS installed locally.
 
 ### One time Gazebo setup step:
