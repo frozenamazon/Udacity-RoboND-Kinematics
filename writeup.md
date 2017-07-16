@@ -175,9 +175,12 @@ As we calculated joints 1-3, we can substitute those values in their respective 
     R3_6 = inv(R0_3) * Rrpy * Rcorr.T
     Rcorr = rot_z()*rot_y()
  ```   
-Note for Rrpy we are using intrinsic rotation as that is what is provided
+Note for Rrpy we are using extrinsic rotation for X-Y-Z, as by default the method tf.transformation_matrix("","rxyz"), by default returns roll, pitch, yaw for an extrinsic rotation of  X-Y-Z. As such the inverse rotation matrix is 
 
 ```
+Rxyz_ext = Rx(roll) * Ry(pitch) * Rz(yaw)
+inv(Rxyz_ext) = Rz(yaw) * Ry(pitch) * Rx (roll)
+
     Rrpy = Matrix([[cos(alpha)*cos(beta), cos(alpha)*sin(beta)*sin(gamma) - sin(alpha)*cos(gamma), cos(alpha)*sin(beta)*cos(gamma) + sin(alpha)*sin(gamma)], 
                [sin(alpha)*cos(beta), sin(alpha)*sin(beta)*sin(gamma) + cos(alpha)*cos(gamma), sin(alpha)*sin(beta)*cos(gamma) - cos(alpha)*sin(gamma)],
                [          -sin(beta),                                    cos(beta)*sin(gamma), cos(beta)*cos(gamma)]]);
