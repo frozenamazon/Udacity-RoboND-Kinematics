@@ -120,15 +120,20 @@ def getRRRSpehericalArmJointAngles(yaw, pitch, roll, theta1, theta2, theta3):
     #     [                           sin(q5)*cos(q6),                           -sin(q5)*sin(q6),          cos(q5)],
     #     [-sin(q4)*cos(q5)*cos(q6) - sin(q6)*cos(q4),  sin(q4)*sin(q6)*cos(q5) - cos(q4)*cos(q6),  sin(q4)*sin(q5)]])
 
-    # theta4 is atan2( sin(q4)*sin(q5)/ sin(q5)*cos(q4)) = atan2(sin(q4)/cos(q4))
     theta4 = atan2(E3_6[2,2], -E3_6[0,2]).evalf()
-    # theta6 is atan2( sin(q5)*sin(q6)/ sin(q5)*cos(q6)) = atan2(sin(q6)/cos(q6))
     theta6 = atan2(-E3_6[1,1], E3_6[1,0]).evalf()
 
     #theta5 is atan2 ( sqrt(sin2(q5)*cos2(q6) + sin(q5)*sin(q6))/cos(q5))
     # where sin2 + cos2 = 1
     theta5 = atan2(sqrt(E3_6[1,0]**2 + E3_6[1,1]**2), E3_6[1,2]).evalf()
     theta5b = atan2(-sqrt(E3_6[1,0]**2 + E3_6[1,1]**2), E3_6[1,2]).evalf()
+
+    # if(sin(theta5) < 0):
+    #     theta4 = atan2(-E3_6[2,2], E3_6[0,2]).evalf()
+    #     theta6 = atan2(E3_6[1,1], -E3_6[1,0]).evalf()
+    # else:
+    #     theta4 = atan2(E3_6[2,2], -E3_6[0,2]).evalf()
+    #     theta6 = atan2(-E3_6[1,1], E3_6[1,0]).evalf()
 
     return [theta4, theta5, theta6]
 
