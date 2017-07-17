@@ -8,6 +8,10 @@ Pick an egg/cylinder from the shelf. The egg has 9 possibilities on where it can
 #### Video of working arm
 https://youtu.be/B2PavVfN0Tg
 
+##### Place into target bin
+
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/result_bin.png "DH annotation")
+
 ##### World
 ![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/world.png "DH annotation")
 
@@ -19,7 +23,7 @@ https://youtu.be/B2PavVfN0Tg
 
 ##### Pick up
 
-![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/misc2.png "DH annotation")
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/result.png "DH annotation")
 
 ### Requirement:
 
