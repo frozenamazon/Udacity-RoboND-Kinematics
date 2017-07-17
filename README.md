@@ -12,18 +12,20 @@ https://youtu.be/B2PavVfN0Tg
 
 ![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/result_bin.png "DH annotation")
 
+##### Pick up
+
+![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/result.png "DH annotation")
+
 ##### World
 ![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/world.png "DH annotation")
+
+### These are the tools used
 
 ##### Motion planning
 ![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/misc3.png "DH annotation")
 
 ##### RViz of arm 
 ![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/misc1.png "DH annotation")
-
-##### Pick up
-
-![alt text](https://raw.githubusercontent.com/lisaljl/Udacity-RoboND-Kinematics/master/misc_images/result.png "DH annotation")
 
 ### Requirement:
 
